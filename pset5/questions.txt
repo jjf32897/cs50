@@ -1,0 +1,56 @@
+0.  It's a more obnoxious way of referring to a lung disease also known as
+    "silicosis."
+1.  It returns the resource usage for a specific function.
+2.  16
+3.  Passing the entire rusage struct would be inefficient since it's so large;
+    it's much easier to just pass the pointer to it.
+4.  Each iteration of the for loop reads a single character from the text file.
+    This loop repeats until the character read is the end of the file. If the
+    character is alphabetic or an apostrophe, it will be added to the buffer
+    "word." If it encounters a number, it will ignore the entire string and skip
+    to the end. If it encounters a char that is non-alphabetic, an apostrophe,
+    or a digit, and at least one character has been added to the buffer
+    (index > 0), then logically an entire word has been found. The word will be
+    terminated by the addition of '\0' and it will be check'd. main will prepare
+    for a new word by resetting the index (which keeps track of the number of
+    characters read) to 0.
+5.  fgetc allows speller.c to filter out non-alphabetic/non-apostrophe symbols.
+    fscanf would take in strings at a time which might read in periods, numbers,
+    or other non-alphabetic/non-apostrophe symbols. These would have to be
+    tediously filtered out of each scanned string or otherwise dealt with before
+    being check'd. fgetc ensures that only "pure" words are passed to check.
+6.  The values pointed to by constant char*s cannot be changed. Therefore, when
+    passed to check and load, the words/dictionary cannot be tampered with. For
+    check, this ensures that misspelled words can be printed out properly by
+    speller. The program should not be changing the name of the dictionary or
+    the identity of any of the checked words at any point.
+7.  I eventually settled on a hash table. Each node contains a char array to
+    hold each dictionary word and a node* to point to the next node in a linked
+    list of the table's bucket. The table itself is an array of node*s.
+8.  About 7.250 s total (I started by using a trie)
+9.  I tested a variety of hash functions. The first one I made myself was incre-
+    dibly slow (took about 10.6 seconds in total). I eventually settled on the
+    best one I could find online. I also went through my code multiple times and
+    tweaked things to limit the number of conditions that had to be checked or
+    the number of times a linked list had to be traversed. I read that making
+    large for loops in the format (int i = n; i--; ) where n is the number of
+    iterations is more efficient than the traditional manner, but I didn't noti-
+    ce a big difference. 
+    At one point, I thought to implement a hash table of nodes as opposed to one
+    of pointers. I thought that perhaps checking times would be faster since in
+    a table of pointers, at least one pointer would have be followed to check
+    for a word, but table[index].word could check a word immediately in a table
+    of nodes (this seemed intuitively faster, but I couldn't prove it). I found
+    that while my unload time was drastically reduced and the check time fell
+    slightly as well, a table of nodes took much longer to load. I couldn't find
+    an efficient way to check whether or not a word had already been inputted
+    into the first table node, since they all contained garbage values upon cre-
+    ation.
+10. I can't figure out a way to make my load, check and unload times any faster.
+    I understand that making a better hash function with a. faster operations or
+    b. fewer collisions would make loading, checking and unloading faster. I
+    don't think that loading can be much faster since regardless of the hash
+    function, malloc would have to run for each word. However, with fewer coll-
+    isions, check and unload would not have to traverse as many pointers, which
+    would make them faster. I can't think of a more efficient way to code my
+    functions, but I feel like there are better methods that exist.

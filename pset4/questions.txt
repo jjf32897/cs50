@@ -1,0 +1,30 @@
+0.  BMP: 4294967296 (2^32 bits), GIF: 256 (2^8 bits), JPEG:16777216 (2^24 bits),
+    PNG: 16777216 (2^24 bits)
+1.  GIF
+2.  Lossy compression uses approximations to compress the data, ultimately
+    discarding some data and lowering quality. Lossless compression uses
+    algorithms to compress the data, but are reversible so one can retrieve the
+    original quality from the compressed file.
+3.  JPEG
+4.  The data that points to the file's actual data is altered and declared to be
+    free, but the file's actual data is not tampered with at all.
+5.  One can overwrite the new data: this is often done by filling the actual
+    data with zeros (NULL) or random characters.
+6.  The header file for the library that constructed the data types int8_t,
+    uint8_t, int16_t, uint16_t, int32_t, uint32_t, int64_t, and uint64_t
+7.  They are more specific types of integers and allow you to give more definit-
+    ion to how they will be used, and allow you to use space efficiently.
+8.  1, 4, 4, 2
+9.  0x4d42
+10. biSize is the number of bytes needed by the info header, bfSize is the numb-
+    er of bytes needed for the entire BMP file.
+11. The vertical direction of the image will project upwards rather than down.
+12. biBitCount
+13. If the computer does not have enough memory or the proper permissions to
+    open the file, it will return NULL.
+14. We always read and work with a single element/block/pixel at a time. 
+15. 1
+16. fseek shifts the position that the computer is currently reading/writing at.
+17. SEEK_CUR means "seek current," indicating that the fseek shift should be re-
+    lative to the current position the file is being read from.
+18. https://www.youtube.com/watch?v=dQw4w9WgXcQ 
